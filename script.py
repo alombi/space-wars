@@ -221,13 +221,13 @@ while run:
         rocket.x -= rocket.vel
         left = True
         right= False
-    if keys[pygame.K_RIGHT] and rocket.x < 1400 - rocket.width - rocket.vel:
+    if keys[pygame.K_RIGHT] and rocket.x < 1370 - rocket.width - rocket.vel:
         rocket.x += rocket.vel
         left = False
         right= True
     if keys[pygame.K_UP] and rocket.y > 0:
         rocket.y -= rocket.vel
-    if keys [pygame.K_DOWN] and rocket.y < 800 - rocket.height - rocket.vel:
+    if keys [pygame.K_DOWN] and rocket.y < 720 - rocket.height - rocket.vel:
         rocket.y += rocket.vel
     if keys [pygame.K_SPACE]:
         if left == True:
