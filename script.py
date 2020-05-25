@@ -21,7 +21,7 @@ else:
 
 
 # creating window
-screen = pygame.display.set_mode((1420, 800))
+screen = pygame.display.set_mode((1380, 740))
 pygame.display.set_caption('SpaceWars')
 
 bg = pygame.image.load('bg.png')
@@ -130,7 +130,7 @@ class enemyVert(object):
 def reloadScreen():
     screen.blit(bg, (0, 0))
     text = fontSmall.render('Level ' + str(level), 1, (255, 255, 255))
-    screen.blit(text, (1300, 10))
+    screen.blit(text, (1250, 10))
     text = fontTitle.render('SpaceWars', 2, (255, 255, 255))
     screen.blit(text, (600, 20))
     rocket.draw(screen)
