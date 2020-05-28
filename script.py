@@ -10,6 +10,8 @@ clock = pygame.time.Clock()
 
 level = 1
 
+record = open('record.txt', 'r').read()
+
 health = 100
 alive = True
 if level > 5:
@@ -131,6 +133,8 @@ def reloadScreen():
     screen.blit(bg, (0, 0))
     text = fontSmall.render('Level ' + str(level), 1, (255, 255, 255))
     screen.blit(text, (1250, 10))
+    text = fontSmall.render('Record: ' + str(record), 1, (255, 255, 255))
+    screen.blit(text, (20, 10))
     text = fontTitle.render('SpaceWars', 2, (255, 255, 255))
     screen.blit(text, (600, 20))
     rocket.draw(screen)
@@ -164,6 +168,13 @@ bullets = []
 run = True
 clock.tick(27)
 while run:
+
+    recordOverwrite = open('record.txt', 'r').read()
+    if int(level) > int(record):
+        recordOverwrite = open('record.txt', 'w')
+        recordOverwrite.write(str(level))
+        recordOverwrite.close()
+
     pygame.time.delay(100)
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
