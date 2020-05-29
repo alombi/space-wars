@@ -45,14 +45,17 @@ class player(object):
         self.height = height
         self.x = x
         self.y = y - height - vel
-        self.hitbox = (self.x - 2, self.y -5, 55, 50)
+        self.hitbox = (self.x - 2, self.y -5, 50, 43)
     def draw(self, screen):
         if left == True:
             screen.blit(characterLeft, (self.x, self.y))
-            self.hitbox = (self.x - 2, self.y -5, 55, 50)
+            self.hitbox = (self.x - 2, self.y -5, 50, 43)
+
         else:
             screen.blit(characterRight, (self.x, self.y))
-            self.hitbox = (self.x - 2, self.y -5, 55, 50)
+            self.hitbox = (self.x - 2, self.y -5, 53, 43)
+            pygame.draw.rect(screen, (255, 0 , 0), self.hitbox, 1)
+
 
 
 # BULLLETS
@@ -78,11 +81,11 @@ class enemy(object):
         self.end = end
         self.vel = vel
         self.path = [self.x, self.end]
-        self.hitbox = (self.x - 2, self.y -5, 55, 60)
+        self.hitbox = (self.x, self.y, 53, 43)
     def draw(self, screen):
         self.move()
         screen.blit(alien, (self.x, self.y))
-        self.hitbox = (self.x - 2, self.y -5, 55, 60)
+        self.hitbox = (self.x, self.y, 53, 43)
     def move(self):
         if self.vel > 0:
             if self.x + self.vel < self.path[1]:
@@ -106,11 +109,11 @@ class enemyVert(object):
         self.end = end
         self.vel = vel
         self.path = [self.y, self.end]
-        self.hitbox = (self.x - 2, self.y -5, 55, 60)
+        self.hitbox = (self.x - 2, self.y -5, 53, 43)
     def draw(self, screen):
         self.move()
         screen.blit(alien2, (self.x, self.y))
-        self.hitbox = (self.x - 2, self.y -5, 55, 60)
+        self.hitbox = (self.x - 2, self.y -5, 53, 43)
     def move(self):
         if self.vel > 0:
             if self.y + self.vel < self.path[1]:
@@ -203,7 +206,7 @@ while run:
             bullets.pop(bullets.index(bullet))
     # collision
     if rocket.x < aim.hitbox[0] + (aim.width / 2) and rocket.x > aim.hitbox[0] - (aim.width / 2):
-        if rocket.y < aim.hitbox [1] + (aim.height * 2) and rocket.y > aim.hitbox[1] - (aim.height * 2):
+        if rocket.y < aim.hitbox [1] + (aim.height * 2) and rocket.y > aim.hitbox[1] - (aim.height / 2):
             text = fontAlert.render('Wasted!', 1, (255, 255, 255))
             screen.blit(text, (600, 350))
             pygame.display.update()
@@ -213,7 +216,7 @@ while run:
             break
     if level >= 5:
         if rocket.x < aim2.hitbox[0] + (aim2.width / 2) and rocket.x > aim2.hitbox[0] - (aim2.width / 2):
-            if rocket.y < aim2.hitbox [1] + (aim2.height * 2) and rocket.y > aim2.hitbox[1] - (aim2.height * 2):
+            if rocket.y < aim2.hitbox [1] + (aim2.height * 2) and rocket.y > aim2.hitbox[1] - (aim2.height / 2):
                 text = fontAlert.render('Wasted!', 1, (255, 255, 255))
                 screen.blit(text, (600, 350))
                 pygame.display.update()
@@ -223,8 +226,6 @@ while run:
                 break
 
 
-
-                
 # commands
     keys = pygame.key.get_pressed()
 
