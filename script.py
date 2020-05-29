@@ -132,7 +132,7 @@ class enemyVert(object):
 def reloadScreen():
     screen.blit(bg, (0, 0))
     text = fontSmall.render('Level ' + str(level), 1, (255, 255, 255))
-    screen.blit(text, (1250, 10))
+    screen.blit(text, (1270, 10))
     text = fontSmall.render('Record: ' + str(record), 1, (255, 255, 255))
     screen.blit(text, (20, 10))
     text = fontTitle.render('SpaceWars', 2, (255, 255, 255))
