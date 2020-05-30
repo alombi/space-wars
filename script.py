@@ -45,11 +45,11 @@ class player(object):
         self.height = height
         self.x = x
         self.y = y - height - vel
-        self.hitbox = (self.x - 2, self.y -5, 50, 43)
+        self.hitbox = (self.x - 2, self.y -5, 53, 43)
     def draw(self, screen):
         if left == True:
             screen.blit(characterLeft, (self.x, self.y))
-            self.hitbox = (self.x - 2, self.y -5, 50, 43)
+            self.hitbox = (self.x - 2, self.y -5, 53, 43)
 
         else:
             screen.blit(characterRight, (self.x, self.y))
