@@ -183,16 +183,16 @@ while run:
             run = False
     for bullet in bullets:
         # hits
-        if bullet.x < aim.hitbox[0] + (aim.width / 2) and bullet.x > aim.hitbox[0] - (aim.width / 2):
-            if bullet.y < aim.hitbox [1] + (aim.height * 2) and bullet.y > aim.hitbox[1] - (aim.height * 2):
+        if bullet.y - bullet.radius < aim.hitbox[1] + aim.hitbox[3] and bullet.y + bullet.radius > aim.hitbox[1]:
+            if bullet.x + bullet.radius > aim.hitbox[0] and bullet.x - bullet.radius < aim.hitbox[0] + aim.hitbox[2]:
                 bullets.pop(bullets.index(bullet))
                 aim.hit()
                 health = health - 10
                 if health == 0:
                     alive = False
         if level >= 5:
-            if bullet.x < aim2.hitbox[0] + (aim2.width / 2) and bullet.x > aim2.hitbox[0] - (aim2.width / 2):
-                if bullet.y < aim2.hitbox [1] + (aim2.height * 2) and bullet.y > aim2.hitbox[1] - (aim2.height * 2):
+            if bullet.y - bullet.radius < aim2.hitbox[1] + aim2.hitbox[3] and bullet.y + bullet.radius > aim2.hitbox[1]:
+                if bullet.x + bullet.radius > aim2.hitbox[0] and bullet.x - bullet.radius < aim2.hitbox[0] + aim2.hitbox[2]:
                     bullets.pop(bullets.index(bullet))
                     aim2.hit()
                     health2 = health2 - 10
@@ -204,8 +204,8 @@ while run:
         else:
             bullets.pop(bullets.index(bullet))
     # collision
-    if rocket.x < aim.hitbox[0] + (aim.width / 2) and rocket.x > aim.hitbox[0] - (aim.width / 2):
-        if rocket.y < aim.hitbox [1] + (aim.height * 2) and rocket.y > aim.hitbox[1] - (aim.height / 2):
+    if rocket.hitbox[1] < aim.hitbox[1] + aim.hitbox[3] and rocket.hitbox[1] + rocket.hitbox[3] > aim.hitbox[1]:
+        if rocket.hitbox[0] + rocket.hitbox[2] > aim.hitbox[0] and rocket.hitbox[0] < aim.hitbox[0] + aim.hitbox[2]:
             text = fontAlert.render('Wasted!', 1, (255, 255, 255))
             screen.blit(text, (600, 350))
             pygame.display.update()
