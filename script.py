@@ -24,7 +24,7 @@ else:
 
 # creating window
 screen = pygame.display.set_mode((1380, 740))
-pygame.display.set_caption('SpaceWars')
+pygame.display.set_caption('')
 
 bg = pygame.image.load('bg.png')
 characterLeft= pygame.image.load('characterLeft.png')
@@ -45,15 +45,15 @@ class player(object):
         self.height = height
         self.x = x
         self.y = y - height - vel
-        self.hitbox = (self.x - 2, self.y -5, 53, 43)
+        self.hitbox = (self.x - 2, self.y -5, 53, 70)
     def draw(self, screen):
         if left == True:
             screen.blit(characterLeft, (self.x, self.y))
-            self.hitbox = (self.x - 2, self.y -5, 53, 43)
+            self.hitbox = (self.x - 2, self.y -5, 53, 70)
 
         else:
             screen.blit(characterRight, (self.x, self.y))
-            self.hitbox = (self.x - 2, self.y -5, 53, 43)
+            self.hitbox = (self.x - 2, self.y -5, 53, 70)
 
 
 
@@ -80,11 +80,11 @@ class enemy(object):
         self.end = end
         self.vel = vel
         self.path = [self.x, self.end]
-        self.hitbox = (self.x, self.y, 53, 43)
+        self.hitbox = (self.x - 2, self.y -5, 70, 70)
     def draw(self, screen):
         self.move()
         screen.blit(alien, (self.x, self.y))
-        self.hitbox = (self.x, self.y, 53, 43)
+        self.hitbox = (self.x - 2, self.y -5, 70, 70)
     def move(self):
         if self.vel > 0:
             if self.x + self.vel < self.path[1]:
@@ -108,11 +108,11 @@ class enemyVert(object):
         self.end = end
         self.vel = vel
         self.path = [self.y, self.end]
-        self.hitbox = (self.x - 2, self.y -5, 53, 43)
+        self.hitbox = (self.x - 2, self.y -5, 70, 70)
     def draw(self, screen):
         self.move()
         screen.blit(alien2, (self.x, self.y))
-        self.hitbox = (self.x - 2, self.y -5, 53, 43)
+        self.hitbox = (self.x - 2, self.y -5, 70, 70)
     def move(self):
         if self.vel > 0:
             if self.y + self.vel < self.path[1]:
@@ -137,7 +137,7 @@ def reloadScreen():
     screen.blit(text, (1270, 10))
     text = fontSmall.render('Record: ' + str(record), 1, (255, 255, 255))
     screen.blit(text, (20, 10))
-    text = fontTitle.render('SpaceWars', 2, (255, 255, 255))
+    text = fontTitle.render('', 2, (255, 255, 255))
     screen.blit(text, (600, 20))
     rocket.draw(screen)
     if alive is True:
@@ -183,16 +183,16 @@ while run:
             run = False
     for bullet in bullets:
         # hits
-        if bullet.x < aim.hitbox[0] + (aim.width / 2) and bullet.x > aim.hitbox[0] - (aim.width / 2):
-            if bullet.y < aim.hitbox [1] + (aim.height * 2) and bullet.y > aim.hitbox[1] - (aim.height * 2):
+        if bullet.y - bullet.radius < aim.hitbox[1] + aim.hitbox[3] and bullet.y + bullet.radius > aim.hitbox[1]:
+            if bullet.x + bullet.radius > aim.hitbox[0] and bullet.x - bullet.radius < aim.hitbox[0] + aim.hitbox[2]:
                 bullets.pop(bullets.index(bullet))
                 aim.hit()
                 health = health - 10
                 if health == 0:
                     alive = False
         if level >= 5:
-            if bullet.x < aim2.hitbox[0] + (aim2.width / 2) and bullet.x > aim2.hitbox[0] - (aim2.width / 2):
-                if bullet.y < aim2.hitbox [1] + (aim2.height * 2) and bullet.y > aim2.hitbox[1] - (aim2.height * 2):
+            if bullet.y - bullet.radius < aim2.hitbox[1] + aim2.hitbox[3] and bullet.y + bullet.radius > aim2.hitbox[1]:
+                if bullet.x + bullet.radius > aim2.hitbox[0] and bullet.x - bullet.radius < aim2.hitbox[0] + aim2.hitbox[2]:
                     bullets.pop(bullets.index(bullet))
                     aim2.hit()
                     health2 = health2 - 10
@@ -204,8 +204,8 @@ while run:
         else:
             bullets.pop(bullets.index(bullet))
     # collision
-    if rocket.x < aim.hitbox[0] + (aim.width / 2) and rocket.x > aim.hitbox[0] - (aim.width / 2):
-        if rocket.y < aim.hitbox [1] + (aim.height * 2) and rocket.y > aim.hitbox[1] - (aim.height / 2):
+    if rocket.hitbox[1] < aim.hitbox[1] + aim.hitbox[3] and rocket.hitbox[1] + rocket.hitbox[3] > aim.hitbox[1]:
+        if rocket.hitbox[0] + rocket.hitbox[2] > aim.hitbox[0] and rocket.hitbox[0] < aim.hitbox[0] + aim.hitbox[2]:
             text = fontAlert.render('Wasted!', 1, (255, 255, 255))
             screen.blit(text, (600, 350))
             pygame.display.update()
@@ -246,7 +246,7 @@ while run:
         else:
             facing = 1
         if len(bullets) < 10:
-            bullets.append(ammo(round(rocket.x + rocket.width), round(rocket.y + rocket.height), facing, 4, (255, 204, 0)))
+            bullets.append(ammo(round(rocket.x + rocket.width), round(rocket.y + rocket.height), facing, 4, (0, 0, 0)))
 
     if alive is False and alive2 is False:
         health = 100
